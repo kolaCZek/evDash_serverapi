@@ -11,11 +11,11 @@
   $api = new Api();
 
   if($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['register'])) {
-    if($apikey = $api->register()){
+    if($akey = $api->register()){
       $result->ret = 'ok';
-      $result->apikey = $apikey;
+      $result->akey = $akey;
     } else {
-      $result->ret = 'err';  
+      $result->ret = 'err';
     }
     die(json_encode($result));
 
