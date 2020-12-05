@@ -4,6 +4,7 @@
   if($_SERVER["CONTENT_TYPE"] != 'application/json') {
     $result->ret = 'err';
     $result->description = 'Unsupported content-type';
+    http_response_code(400);
     die(json_encode($result));
   }
 
@@ -11,11 +12,11 @@
   $api = new Api();
 
   if($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['register'])) {
-    if($akey = $api->register()){
+    if($apikey = $api->register()){
       $result->ret = 'ok';
-      $result->akey = $akey;
+      $result->apikey = $apikey;
     } else {
-      $result->ret = 'err';
+      $result->ret = 'err';  
     }
     die(json_encode($result));
 
@@ -28,15 +29,17 @@
       die(json_encode($result));
     }
     
-    if(!isset($jsondta->akey)){
+    if(!isset($jsondta->apikey)){
       $result->ret = 'err';
-      $result->description = 'akey is missing';
+      $result->description = 'apikey is missing';
+      http_response_code(401);
       die(json_encode($result));
     }
 
-    if(!$api->getApiKeyUser($jsondta->akey)) {
+    if(!$api->getApiKeyUser($jsondta->apikey)) {
       $result->ret = 'err';
-      $result->description = 'akey does not exist';
+      $result->description = 'apikey does not exist';
+      http_response_code(401);
       die(json_encode($result));
     }
 
@@ -46,7 +49,8 @@
         $result->ret = 'ok';
       } else {
         $result->ret = 'err';
-        $result->description = 'error saving values';
+	$result->description = 'error saving values';
+	http_response_code(500);
       }
       die(json_encode($result));
 
@@ -55,7 +59,8 @@
         $result->values = $values;
       } else {
         $result->ret = 'err';
-        $result->description = 'error reading values';
+	$result->description = 'error reading values';
+	http_response_code(500);
       }
       die(json_encode($result));
     }
