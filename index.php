@@ -16,7 +16,8 @@
       $result->ret = 'ok';
       $result->apikey = $apikey;
     } else {
-      $result->ret = 'err';  
+      $result->ret = 'err';
+      http_response_code(500); 
     }
     die(json_encode($result));
 
@@ -26,6 +27,7 @@
     if(!$jsondta = json_decode($json)) {
       $result->ret = 'err';
       $result->description = 'Can not parse json';
+      http_response_code(400);
       die(json_encode($result));
     }
     
