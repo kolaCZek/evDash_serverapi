@@ -5,6 +5,11 @@
 	<?php endif ?>
 	<label for="apikey" class="sr-only">ApiKey</label>
 	<input type="password" id="apikey" name="apikey" class="form-control" placeholder="ApiKey" required>
+	<div class="checkbox mb-3">
+		<label>
+			<input type="checkbox" name="rememberme" value="rememberme"> Remember me
+		</label>
+	</div>
 
 	<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
 </form>

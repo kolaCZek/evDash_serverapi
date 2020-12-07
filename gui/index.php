@@ -9,6 +9,9 @@
 	if(isset($_GET['p']) && $_GET['p'] == "logout") {
 		$_SESSION = array();
 		session_destroy();
+		setcookie('apikey', '', time() - (24 * 3600), '', $_SERVER['SERVER_NAME'], true, true);
+		header('Location: '.$_SERVER['PHP_SELF']);
+		exit;
 	}
 
 	// Login form
@@ -16,6 +19,15 @@
 		if($uid = $gui->signIn($_POST['apikey'])) {
 			$_SESSION['uid'] = $uid;
 			$_SESSION['apikey'] = $_POST['apikey'];
+
+			if(isset($_POST['rememberme']) && !empty($_POST['rememberme'])) {
+				setcookie('apikey', $_POST['apikey'], time() + (10 * 365 * 24 * 60 * 60), '', $_SERVER['SERVER_NAME'], true, true);
+			} else {
+				if(isset($_COOKIE['apikey'])) {
+					setcookie('apikey', '', time() - (24 * 3600), '', $_SERVER['SERVER_NAME'], true, true);
+				}
+			}
+
 			header('Location: '.$_SERVER['PHP_SELF']);
 			exit;
 		} else {
@@ -25,11 +37,19 @@
 
 	// Is user signed and valid?
 	if(isset($_SESSION['apikey']) && isset($_SESSION['uid'])) {
-		if($_SESSION['uid'] != $gui->signIn($_SESSION['apikey'])) {
+		if($_SESSION['uid'] == $gui->signIn($_SESSION['apikey'])) {
+			$signedin = true;
+		} else {
 			$_SESSION = array();
 			session_destroy();
-		} else {
+		}
+	} elseif(isset($_COOKIE['apikey']) && !empty($_COOKIE['apikey'])) {
+		if($uid = $gui->signIn($_COOKIE['apikey'])) {
+			$_SESSION['uid'] = $uid;
+			$_SESSION['apikey'] = $_COOKIE['apikey'];
 			$signedin = true;
+		} else {
+			setcookie('apikey', '', time() - (24 * 3600), '', $_SERVER['SERVER_NAME'], true, true);
 		}
 	}
 
