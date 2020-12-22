@@ -24,6 +24,7 @@ CREATE TABLE `data` (
   `batInletC` float DEFAULT NULL,
   `batFanStatus` float DEFAULT NULL,
   `speedKmh` float DEFAULT NULL,
+  `odoKm` float DEFAULT NULL,
   `cumulativeEnergyChargedKWh` float DEFAULT NULL,
   `cumulativeEnergyDischargedKWh` float DEFAULT NULL,
   PRIMARY KEY (`iddata`),
