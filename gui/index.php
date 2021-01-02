@@ -65,7 +65,9 @@
 				case 'graphs':
 					$page = 'graphs';
 					break;
-				
+				case 'settings':
+					$page = 'settings';
+					break;
 				default:
 					$page = '404';
 					http_response_code(404);
@@ -107,6 +109,9 @@
 					</ul>
 
 					<ul class="navbar-nav ml-auto">
+						<li class="nav-item">
+                                                        <a class="nav-link<?php if($page == 'settings'){echo(' active');} ?>" href="?p=settings">Settings</a>
+                                                </li>
 						<li class="nav-item">
 							<a class="nav-link" href="?p=logout">Sign Out</a>
 						</li>

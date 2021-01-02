@@ -50,8 +50,8 @@ class Api {
       return false; 
     }
 
-    $query = $this->mysqli->prepare("INSERT INTO `data` (`user`, `IP`, `carType`, `socPerc`, `sohPerc`, `batPowerKw`, `batPowerAmp`, `batVoltage`, `auxVoltage`, `auxAmp`, `batMinC`, `batMaxC`, `batInletC`, `batFanStatus`, `speedKmh`, `cumulativeEnergyChargedKWh`, `cumulativeEnergyDischargedKWh`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $query->bind_param('isidddddddddddddd', $iduser, $_SERVER['REMOTE_ADDR'], $json->carType, $json->socPerc, $json->sohPerc, $json->batPowerKw, $json->batPowerAmp, $json->batVoltage, $json->auxVoltage, $json->auxAmp, $json->batMinC, $json->batMaxC, $json->batInletC, $json->batFanStatus, $json->speedKmh, $json->cumulativeEnergyChargedKWh, $json->cumulativeEnergyDischargedKWh);
+    $query = $this->mysqli->prepare("INSERT INTO `data` (`user`, `IP`, `carType`, `ignitionOn`, `chargingOn`, `socPerc`, `sohPerc`, `batPowerKw`, `batPowerAmp`, `batVoltage`, `auxVoltage`, `auxAmp`, `batMinC`, `batMaxC`, `batInletC`, `batFanStatus`, `speedKmh`, `odoKm`, `cumulativeEnergyChargedKWh`, `cumulativeEnergyDischargedKWh`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $query->bind_param('isiiiddddddddddddddd', $iduser, $_SERVER['REMOTE_ADDR'], $json->carType, $json->ignitionOn, $json->chargingOn, $json->socPerc, $json->sohPerc, $json->batPowerKw, $json->batPowerAmp, $json->batVoltage, $json->auxVoltage, $json->auxAmp, $json->batMinC, $json->batMaxC, $json->batInletC, $json->batFanStatus, $json->speedKmh, $json->odoKm, $json->cumulativeEnergyChargedKWh, $json->cumulativeEnergyDischargedKWh);
 
     if($query->execute()) {
       return true;
@@ -66,10 +66,10 @@ class Api {
     }
 
     if(isset($json->timestampFrom) && isset($json->timestampTo)) {
-      $query = $this->mysqli->prepare("SELECT `timestamp`, `carType`, `socPerc`, `sohPerc`, `batPowerKw`, `batPowerAmp`, `batVoltage`, `auxVoltage`, `auxAmp`, `batMinC`, `batMaxC`, `batInletC`, `batFanStatus`, `speedKmh`, `cumulativeEnergyChargedKWh`, `cumulativeEnergyDischargedKWh` FROM `data` WHERE `user` = ? AND `timestamp` >= ? AND `timestamp` <= ? ORDER BY `timestamp`");
+      $query = $this->mysqli->prepare("SELECT `timestamp`, `carType`, `ignitionOn, `chargingOn`, `socPerc`, `sohPerc`, `batPowerKw`, `batPowerAmp`, `batVoltage`, `auxVoltage`, `auxAmp`, `batMinC`, `batMaxC`, `batInletC`, `batFanStatus`, `speedKmh`, `odoKm`. `cumulativeEnergyChargedKWh`, `cumulativeEnergyDischargedKWh` FROM `data` WHERE `user` = ? AND `timestamp` >= ? AND `timestamp` <= ? ORDER BY `timestamp`");
       $query->bind_param('iss', $iduser, $json->timestampFrom, $json->timestampTo);
     } else {
-      $query = $this->mysqli->prepare("SELECT `timestamp`, `carType`, `socPerc`, `sohPerc`, `batPowerKw`, `batPowerAmp`, `batVoltage`, `auxVoltage`, `auxAmp`, `batMinC`, `batMaxC`, `batInletC`, `batFanStatus`, `speedKmh`, `cumulativeEnergyChargedKWh`, `cumulativeEnergyDischargedKWh` FROM `data` WHERE `user` = ? ORDER BY `timestamp` DESC LIMIT 1");
+      $query = $this->mysqli->prepare("SELECT `timestamp`, `carType`, `ignitionOn`, `chargingOn`, `socPerc`, `sohPerc`, `batPowerKw`, `batPowerAmp`, `batVoltage`, `auxVoltage`, `auxAmp`, `batMinC`, `batMaxC`, `batInletC`, `batFanStatus`, `speedKmh`, `odoKm`, `cumulativeEnergyChargedKWh`, `cumulativeEnergyDischargedKWh` FROM `data` WHERE `user` = ? ORDER BY `timestamp` DESC LIMIT 1");
       $query->bind_param('i', $iduser);
     }
 
