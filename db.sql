@@ -2,6 +2,8 @@ CREATE TABLE `users` (
   `iduser` int(11) NOT NULL AUTO_INCREMENT,
   `apikey` varchar(12) NOT NULL,
   `IP` varchar(16) DEFAULT NULL,
+  `timezone` varchar(64) DEFAULT 'UTC',
+  `notifications` TINYINT(4) DEFAULT 0,
   PRIMARY KEY (`iduser`),
   KEY `apikey` (`apikey`)
 );
@@ -12,6 +14,8 @@ CREATE TABLE `data` (
   `timestamp` datetime NOT NULL DEFAULT current_timestamp(),
   `IP` varchar(16) DEFAULT NULL,
   `carType` int(11) DEFAULT NULL,
+  `ignitionOn` TINYINT(4) DEFAULT NULL,
+  `chargingOn` TINYINT(4) DEFAULT NULL,
   `socPerc` float DEFAULT NULL,
   `sohPerc` float DEFAULT NULL,
   `batPowerKw` float DEFAULT NULL,
