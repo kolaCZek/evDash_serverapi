@@ -41,5 +41,25 @@ class Gui {
 			return $query->get_result()->fetch_object();      
 		}
 	}
+
+	public function getSettings($uid) {
+		$query = $this->mysqli->prepare("SELECT `timezone`, `notifications` FROM `users` WHERE `iduser` = ?");
+		$query->bind_param('i', $uid);
+
+		if($query->execute()) {
+			return $query->get_result()->fetch_object();      
+		}
+	}
+
+	public function setSettings($uid, $timezone, $notifications) {
+	    $query = $this->mysqli->prepare("UPDATE `users` SET `timezone` = ?, `notifications` = ? WHERE `iduser` = ?");
+	    $query->bind_param('sii', $timezone, $uid, $notifications);
+
+	    if($query->execute()) {
+	      return true;
+	    } else {
+	      return false;
+	    }
+	}
 }
 ?>

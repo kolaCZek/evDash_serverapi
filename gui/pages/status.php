@@ -1,5 +1,12 @@
 <?php
 	$dta = $gui->getLastRecord($_SESSION['uid']);
+	$settings = $gui->getSettings($_SESSION['uid']);
+
+	if(empty($settings->timezone)) {
+		$settings->timezone = 'UTC';
+	}
+
+	date_default_timezone_set($settings->timezone);
 
 	$carTypes = array(
 		0 => 'Kia eNiro 2020 64kWh',
@@ -22,7 +29,7 @@
 		<li class="list-group-item d-flex justify-content-between lh-condensed">
 			<div style="text-align: left">
 				<h6 class="my-0">State of Charge</h6>
-				<small class="text-muted">Last update: <?= $dta->timestamp; ?></small>
+				<small class="text-muted">Last update: <?= date('Y-m-d H:i:s',strtotime($dta->timestamp.' UTC')) ?></small>
 			</div>
 			<span class="text-muted"><?= round($dta->socPerc, 1); ?> %</span>
 		</li>
