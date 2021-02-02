@@ -89,6 +89,7 @@
 
 		<link href="css/bootstrap.min.css" rel="stylesheet">
 		<link href="css/gui.css" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	</head>
 	<body class="text-center">
 		<?php if($signedin): ?>

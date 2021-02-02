@@ -31,7 +31,14 @@
 				<h6 class="my-0">State of Charge</h6>
 				<small class="text-muted">Last update: <?= date('Y-m-d H:i:s',strtotime($dta->timestamp.' UTC')) ?></small>
 			</div>
-			<span class="text-muted"><?= round($dta->socPerc, 1); ?> %</span>
+			<span class="text-muted">
+				<?php if($dta->chargingOn == 1): ?>
+					<i class="material-icons">ev_station</i>
+				<?php elseif($dta->ignitionOn == 1):?>
+					<i class="material-icons">commute</i>
+				<?php endif; ?>
+				<?= round($dta->socPerc, 1); ?> %
+			</span>
 		</li>
 		<li class="list-group-item d-flex justify-content-between lh-condensed">
 			<div style="text-align: left">
