@@ -17,6 +17,7 @@ CREATE TABLE `data` (
   `ignitionOn` TINYINT(4) DEFAULT NULL,
   `chargingOn` TINYINT(4) DEFAULT NULL,
   `socPerc` float DEFAULT NULL,
+  `socPercBms` float DEFAULT NULL,
   `sohPerc` float DEFAULT NULL,
   `batPowerKw` float DEFAULT NULL,
   `batPowerAmp` float DEFAULT NULL,

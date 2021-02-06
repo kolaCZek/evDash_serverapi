@@ -38,6 +38,9 @@
 					<i class="material-icons">commute</i>
 				<?php endif; ?>
 				<?= round($dta->socPerc, 1); ?> %
+				<?php if($dta->socPercBms > 0): ?>
+					(<?= round($dta->socPercBms, 1); ?> %)
+				<?php endif; ?>
 			</span>
 		</li>
 		<li class="list-group-item d-flex justify-content-between lh-condensed">
