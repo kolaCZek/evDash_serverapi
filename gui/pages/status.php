@@ -32,10 +32,14 @@
 				<small class="text-muted">Last update: <?= date('Y-m-d H:i:s',strtotime($dta->timestamp.' UTC')) ?></small>
 			</div>
 			<span class="text-muted">
-				<?php if($dta->chargingOn == 1): ?>
-					<i class="material-icons">ev_station</i>
-				<?php elseif($dta->ignitionOn == 1):?>
-					<i class="material-icons">commute</i>
+				<?php if(time() - strtotime($dta->timestamp.' UTC') > 120): ?>
+					<i class="material-icons">cloud_off</i>
+				<?php else: ?>
+					<?php if($dta->chargingOn == 1): ?>
+						<i class="material-icons">ev_station</i>
+					<?php elseif($dta->ignitionOn == 1):?>
+						<i class="material-icons">commute</i>
+					<?php endif; ?>
 				<?php endif; ?>
 				<?= round($dta->socPerc, 1); ?> %
 				<?php if($dta->socPercBms > 0): ?>
