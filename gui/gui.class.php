@@ -38,22 +38,22 @@ class Gui {
 		$query->bind_param('i', $uid);
 
 		if($query->execute()) {
-			return $query->get_result()->fetch_object();      
+			return $query->get_result()->fetch_object();
 		}
 	}
 
 	public function getSettings($uid) {
-		$query = $this->mysqli->prepare("SELECT `timezone`, `notifications` FROM `users` WHERE `iduser` = ?");
+		$query = $this->mysqli->prepare("SELECT `timezone`, `notifications`, `abrp_enabled`, `abrp_token` FROM `users` WHERE `iduser` = ?");
 		$query->bind_param('i', $uid);
 
 		if($query->execute()) {
-			return $query->get_result()->fetch_object();      
+			return $query->get_result()->fetch_object();
 		}
 	}
 
-	public function setSettings($uid, $timezone, $notifications) {
-	    $query = $this->mysqli->prepare("UPDATE `users` SET `timezone` = ?, `notifications` = ? WHERE `iduser` = ?");
-	    $query->bind_param('sii', $timezone, $uid, $notifications);
+	public function setSettings($uid, $timezone, $notifications, $abrp_enabled, $abrp_token) {
+	    $query = $this->mysqli->prepare("UPDATE `users` SET `timezone` = ?, `notifications` = ?, `abrp_enabled` = ?, `abrp_token` = ? WHERE `iduser` = ?");
+	    $query->bind_param('siisi', $timezone, $notifications, $abrp_enabled, $abrp_token, $uid);
 
 	    if($query->execute()) {
 	      return true;
