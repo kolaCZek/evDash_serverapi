@@ -111,8 +111,8 @@
 
 					<ul class="navbar-nav ml-auto">
 						<li class="nav-item">
-                                                        <a class="nav-link<?php if($page == 'settings'){echo(' active');} ?>" href="?p=settings">Settings</a>
-                                                </li>
+              <a class="nav-link<?php if($page == 'settings'){echo(' active');} ?>" href="?p=settings">Settings</a>
+            </li>
 						<li class="nav-item">
 							<a class="nav-link" href="?p=logout">Sign Out</a>
 						</li>

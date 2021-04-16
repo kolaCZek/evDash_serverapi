@@ -4,6 +4,8 @@ CREATE TABLE `users` (
   `IP` varchar(16) DEFAULT NULL,
   `timezone` varchar(64) DEFAULT 'UTC',
   `notifications` TINYINT(4) DEFAULT 0,
+  `abrp_enabled` TINYINT(4) DEFAULT 0,
+  `abrp_token` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`iduser`),
   KEY `apikey` (`apikey`)
 );
