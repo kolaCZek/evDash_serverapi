@@ -155,7 +155,7 @@ class Api {
 
     $abrp_json->utc = time();
     $abrp_json->soc = $json->socPerc;
-    if($json->ignitionOn) {
+    if($json->ignitionOn == 1 && $json->chargingOn == 0) {
       $abrp_json->is_parked = 0;
     } else {
       $abrp_json->is_parked = 1;
