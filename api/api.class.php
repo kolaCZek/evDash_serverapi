@@ -154,7 +154,7 @@ class Api {
 
     $curl = curl_init();
 
-    curl_setopt($curl, CURLOPT_URL, 'http://api.iternio.com/1/tlm/send');
+    curl_setopt($curl, CURLOPT_URL, 'https://api.iternio.com/1/tlm/send');
     curl_setopt($curl, CURLOPT_POST, true);
     curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($abrp_dta_post));
     curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-type: application/x-www-form-urlencoded'));
@@ -164,13 +164,11 @@ class Api {
     $info = curl_getinfo($curl);
     curl_close($curl);
 
-    if (!curl_errno($curl)) {
-      if ($info['http_code'] == 200) {
-        return true;
-      }
+    if ($info['http_code'] == 200) {
+      return true;
+    } else {
+      return false;
     }
-
-    return false;
   }
 
   public function getVals($json) {
