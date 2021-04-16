@@ -30,7 +30,7 @@ class Api {
   }
 
   public function getApiKeyUser($apikey) {
-    $query = $this->mysqli->prepare("SELECT `iduser` FROM `users` WHERE `apikey` =  ?");
+    $query = $this->mysqli->prepare("SELECT `iduser` FROM `users` WHERE `apikey` = ?");
     $query->bind_param('s', $apikey);
 
     if($query->execute()) {
@@ -54,9 +54,31 @@ class Api {
 		}
 	}
 
+  private function getLastOdo($iduser) {
+    $query = $this->mysqli->prepare("SELECT `odoKm` FROM `data` WHERE `user` = ? AND `odoKm` > 0 ORDER BY `timestamp` DESC LIMIT 1");
+    $query->bind_param('i', $iduser);
+
+    if($query->execute()) {
+      $query->bind_result($odoKm);
+      $query->fetch();
+
+      if($odoKm) {
+        return $odoKm;
+      }
+    }
+
+    return false;
+  }
+
   public function pushVals($json) {
     if(!$iduser = $this->getApiKeyUser($json->apikey)) {
       return false;
+    }
+
+    if($json->odoKm <= 0) {
+      if($lastOdoKm = $this->getLastOdo($iduser)) {
+        $json->odoKm = $lastOdoKm;
+      }
     }
 
     $query = $this->mysqli->prepare("INSERT INTO `data` (`user`, `IP`, `carType`, `ignitionOn`, `chargingOn`, `socPerc`, `socPercBms`, `sohPerc`, `batPowerKw`, `batPowerAmp`, `batVoltage`, `auxVoltage`, `auxAmp`, `batMinC`, `batMaxC`, `batInletC`, `batFanStatus`, `speedKmh`, `odoKm`, `cumulativeEnergyChargedKWh`, `cumulativeEnergyDischargedKWh`, `gpsLat`, `gpsLon`, `gpsAlt`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
@@ -133,9 +155,23 @@ class Api {
 
     $abrp_json->utc = time();
     $abrp_json->soc = $json->socPerc;
+    if($json->ignitionOn) {
+      $abrp_json->is_parked = 0;
+    } else {
+      $abrp_json->is_parked = 1;
+    }
     $abrp_json->power = $json->batPowerKw * -1;
-    $abrp_json->speed = $json->speedKmh;
+    if ($json->speedKmh >= 5) {
+      $abrp_json->speed = $json->speedKmh;
+    } else {
+      $abrp_json->speed = 0;
+    }
     $abrp_json->is_charging = $json->chargingOn;
+    if($json->chargingOn == 1 && $json->batPowerKw > 22) {
+      $abrp_json->is_dcfc = 1;
+    } elseif($json->chargingOn == 1) {
+      $abrp_json->is_dcfc = 0;
+    }
     $abrp_json->lat = $json->gpsLat;
     $abrp_json->lon = $json->gpsLon;
     $abrp_json->elevation = $json->gpsAlt;
@@ -144,7 +180,13 @@ class Api {
     $abrp_json->batt_temp = ($json->batMinC + $json->batMaxC) / 2;
     $abrp_json->voltage = $json->batVoltage;
     $abrp_json->current = $json->batPowerAmp * -1;
-    $abrp_json->odometer = $json->odoKm;
+    if ($json->odoKm > 0) {
+      $abrp_json->odometer = $json->odoKm;
+    } else {
+      if($lastOdoKm = $this->getLastOdo($iduser)) {
+        $abrp_json->odometer = $lastOdoKm;
+      }
+    }
 
     $abrp_dta_post = [
         'api_key' => $abrp_api_key,
