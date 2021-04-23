@@ -81,8 +81,8 @@ class Api {
       }
     }
 
-    $query = $this->mysqli->prepare("INSERT INTO `data` (`user`, `IP`, `carType`, `ignitionOn`, `chargingOn`, `socPerc`, `socPercBms`, `sohPerc`, `batPowerKw`, `batPowerAmp`, `batVoltage`, `auxVoltage`, `auxAmp`, `batMinC`, `batMaxC`, `batInletC`, `batFanStatus`, `speedKmh`, `odoKm`, `cumulativeEnergyChargedKWh`, `cumulativeEnergyDischargedKWh`, `gpsLat`, `gpsLon`, `gpsAlt`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $query->bind_param('isiiiddddddddddddddddddd', $iduser, $_SERVER['REMOTE_ADDR'], $json->carType, $json->ignitionOn, $json->chargingOn, $json->socPerc, $json->socPercBms, $json->sohPerc, $json->batPowerKw, $json->batPowerAmp, $json->batVoltage, $json->auxVoltage, $json->auxAmp, $json->batMinC, $json->batMaxC, $json->batInletC, $json->batFanStatus, $json->speedKmh, $json->odoKm, $json->cumulativeEnergyChargedKWh, $json->cumulativeEnergyDischargedKWh, $json->gpsLat, $json->gpsLon, $json->gpsAlt);
+    $query = $this->mysqli->prepare("INSERT INTO `data` (`user`, `IP`, `carType`, `ignitionOn`, `chargingOn`, `socPerc`, `socPercBms`, `sohPerc`, `batPowerKw`, `batPowerAmp`, `batVoltage`, `auxVoltage`, `auxAmp`, `batMinC`, `batMaxC`, `batInletC`, `extTemp`, `batFanStatus`, `speedKmh`, `odoKm`, `cumulativeEnergyChargedKWh`, `cumulativeEnergyDischargedKWh`, `gpsLat`, `gpsLon`, `gpsAlt`, `gpsSpeed`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $query->bind_param('isiiiddddddddddddddddddddd', $iduser, $_SERVER['REMOTE_ADDR'], $json->carType, $json->ignitionOn, $json->chargingOn, $json->socPerc, $json->socPercBms, $json->sohPerc, $json->batPowerKw, $json->batPowerAmp, $json->batVoltage, $json->auxVoltage, $json->auxAmp, $json->batMinC, $json->batMaxC, $json->batInletC, $json->extTemp, $json->batFanStatus, $json->speedKmh, $json->odoKm, $json->cumulativeEnergyChargedKWh, $json->cumulativeEnergyDischargedKWh, $json->gpsLat, $json->gpsLon, $json->gpsAlt, $json->gpsSpeed);
 
     if($query->execute()) {
       return true;
@@ -178,6 +178,7 @@ class Api {
     $abrp_json->kwh_charged = $json->cumulativeEnergyChargedKWh;
     $abrp_json->soh = $json->sohPerc;
     $abrp_json->batt_temp = ($json->batMinC + $json->batMaxC) / 2;
+    $abrp_json->ext_temp = $json->extTemp;
     $abrp_json->voltage = $json->batVoltage;
     $abrp_json->current = $json->batPowerAmp * -1;
     if ($json->odoKm > 0) {
