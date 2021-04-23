@@ -75,9 +75,9 @@
 		<li class="list-group-item d-flex justify-content-between lh-condensed">
 			<div style="text-align: left">
 				<h6 class="my-0">Battery Temperature</h6>
-				<small class="text-muted">MIN / MAX / Inlet</small>
+				<small class="text-muted">MIN / MAX / Inlet / Ext</small>
 			</div>
-			<span class="text-muted"><?= round($dta->batMinC, 1); ?> / <?= round($dta->batMaxC, 1); ?> / <?= round($dta->batInletC, 1); ?> &deg;C</span>
+			<span class="text-muted"><?= round($dta->batMinC, 1); ?> / <?= round($dta->batMaxC, 1); ?> / <?= round($dta->batInletC, 1); ?> / <?= round($dta->extTemp, 1); ?> &deg;C</span>
 		</li>
 		<li class="list-group-item d-flex justify-content-between lh-condensed">
 			<div style="text-align: left">
