@@ -237,5 +237,69 @@ class Api {
     }
   }
 
+  public function getChargingInMonth($json) {
+    if(!$iduser = $this->getApiKeyUser($json->apikey)) {
+      return false;
+    }
+
+		if(!isset($date_from, $date_to)) {
+			$date_from = date('Y-m-d h:m:s', mktime(0, 0, 0, $json->month, 1, $json->year));
+			$date_to = date('Y-m-d h:m:s', mktime(23, 59, 59, $json->month+1, 0, $json->year));
+		}
+
+		if(isset($json->gpsLat, $json->gpsLon)) {
+			$query = $this->mysqli->prepare("SELECT `iddata`, `timestamp`, `carType`, `socPerc`, `batPowerKw`, `cumulativeEnergyChargedKWh`, `gpsLat`, `gpsLon` FROM `data` WHERE `user` = ? AND `gpsLat` < ? + 0.02 AND `gpsLat` > ? + -0.02 AND `gpsLon` < ? + 0.02 AND `gpsLon` > ? + -0.02 AND `chargingOn` = 1 AND `timestamp` >= ? AND `timestamp` <= ? ORDER BY `timestamp` DESC");
+			$query->bind_param('iddddss', $iduser, $json->gpsLat, $json->gpsLat, $json->gpsLon, $json->gpsLon, $date_from, $date_to);
+		} else {
+			$query = $this->mysqli->prepare("SELECT `iddata`, `timestamp`, `carType`, `socPerc`, `batPowerKw`, `cumulativeEnergyChargedKWh`, `gpsLat`, `gpsLon` FROM `data` WHERE `user` = ? AND `chargingOn` = 1 AND `timestamp` >= ? AND `timestamp` <= ? ORDER BY `timestamp` DESC");
+			$query->bind_param('iss', $iduser, $date_from, $date_to);
+		}
+
+		if(!$query->execute()) {
+			return false;
+		}
+    $result = $query->get_result();
+    $return = array();
+
+		$last_timestamp = 0;
+		$max_kwh = 0;
+		$last_kwh = 0;
+		$max_perc = 0;
+		$last_perc = 0;
+		$is_dc = false;
+		$i = 0;
+    $return[$i] = new \stdClass();
+
+    while ($obj = $result->fetch_object()) {
+			if(!$max_kwh || !$max_perc) {
+				$max_kwh = $obj->cumulativeEnergyChargedKWh;
+				$max_perc = $obj->socPerc;
+			}
+			if($last_timestamp > strtotime($obj->timestamp) + 1800) {
+				$return[$i]->kwh = $max_kwh - $last_kwh;
+				$return[$i]->max_perc = $max_perc;
+				$return[$i]->carType = $obj->carType;
+				$return[$i]->is_dc = $is_dc;
+				$i++;
+        $return[$i] = new \stdClass();
+				$max_kwh = $obj->cumulativeEnergyChargedKWh;
+				$max_perc = $obj->socPerc;
+				$is_dc = false;
+			}
+			if($obj->batPowerKw > 22) {
+				$is_dc = true;
+			}
+			$return[$i]->timestamp = $obj->timestamp;
+			$last_kwh = $obj->cumulativeEnergyChargedKWh;
+			$return[$i]->min_perc = $obj->socPerc;
+			$return[$i]->gps_lat = $obj->gpsLat;
+			$return[$i]->gps_lon = $obj->gpsLon;
+			$return[$i]->iddata = $obj->iddata;
+			$last_timestamp = strtotime($obj->timestamp);
+    }
+
+    return $return;
+  }
+
 }
 ?>

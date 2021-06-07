@@ -66,13 +66,22 @@ error_reporting(E_ALL);
       $result->ret = 'ok';
       die(json_encode($result));
 
-    } elseif($_SERVER['REQUEST_METHOD'] === 'GET') {
+    } elseif($_SERVER['REQUEST_METHOD'] === 'GET'  && isset($_GET['getVals'])) {
       if($values = $api->getVals($jsondta)) {
         $result->values = $values;
       } else {
         $result->ret = 'err';
-	$result->description = 'error reading values';
-	http_response_code(500);
+      	$result->description = 'error reading values';
+      	http_response_code(500);
+      }
+      die(json_encode($result));
+    } elseif($_SERVER['REQUEST_METHOD'] === 'GET'  && isset($_GET['getChargingInMonth'])) {
+      if($values = $api->getChargingInMonth($jsondta)) {
+        $result->values = $values;
+      } else {
+        $result->ret = 'err';
+      	$result->description = 'error reading values';
+      	http_response_code(500);
       }
       die(json_encode($result));
     }

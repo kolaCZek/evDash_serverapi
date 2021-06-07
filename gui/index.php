@@ -62,8 +62,8 @@
 				case 'status':
 					$page = 'status';
 					break;
-				case 'graphs':
-					$page = 'graphs';
+				case 'charging':
+					$page = 'charging';
 					break;
 				case 'settings':
 					$page = 'settings';
@@ -104,8 +104,8 @@
 						<li class="nav-item<?php if($page == 'status'){echo(' active');} ?>">
 							<a class="nav-link" href="?p=status">Status</a>
 						</li>
-						<li class="nav-item<?php if($page == 'graphs'){echo(' active');} ?>">
-							<a class="nav-link" href="?p=graphs">Graphs</a>
+						<li class="nav-item<?php if($page == 'charging'){echo(' active');} ?>">
+							<a class="nav-link" href="?p=charging">Charging</a>
 						</li>
 					</ul>
 
