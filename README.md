@@ -2,9 +2,25 @@
 
 Rest api for [evDash](https://github.com/nickn17/evDash)
 
+# Notes
+
+The library that evDash uses does not support HTTPS, therefore a server hosted with SSL will not be accessible and report reports in the serial console. Using HTTP only will allow API updates.
+
+# Installation
+
+1) Place files in a php enabled web server
+2) Create MySQL/MariaDB Database
+3) Import db.sql file into new database
+4) Update config.php document in both GUI and API directories
+*Note that the API document differs, including an ABRP Token*
+5) Create API key (See below)
+
+
+# Usage
+
 ## Registering new ApiKey
 ```
-$ curl -X GET -H "Content-Type: application/json" https://api.example.com/\?register
+$ curl -X GET -H "Content-Type: application/json" http://api.example.com/\?register
 
 {"ret":"ok","apikey":"abcdef123456"}
 ```
