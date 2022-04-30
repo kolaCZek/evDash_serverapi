@@ -1,6 +1,6 @@
 # evDash_serverapi
 
-Rest api for [evDas]h(https://github.com/nickn17/evDash)
+Rest api for [evDash](https://github.com/nickn17/evDash)
 
 ## Registering new ApiKey
 ```
