@@ -5,7 +5,7 @@ class Gui {
 	public function __construct() {
 		require('config.php');
 
-		$this->mysqli = new mysqli($dbhost, $dbname, $dbpass, $dbname);
+		$this->mysqli = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
 
 		if($this->mysqli->connect_error) {
 		  throw new Exception('Error connecting to MySQL: '.$this->mysqli->connect_error);
