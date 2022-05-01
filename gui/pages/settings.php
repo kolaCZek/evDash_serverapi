@@ -43,8 +43,10 @@
 	<label for="timezone">TimeZone: </label>
 	<select name="timezone">
 	<?php
-		$OptionsArray = timezone_identifiers_list();
-        while (list ($key, $row) = each ($OptionsArray) ) {
+		$OptionsArray = DateTimeZone::listIdentifiers();
+#        while (list ($key, $row) = foreach ($OptionsArray) ) {
+#	while has been deprecated in PHP8 - updated to https://www.php.net/manual/en/control-structures.foreach.php
+		foreach ($OptionsArray as $row) {
             $option ='<option value="'.$row.'"';
             $option .= ($row == $dta->timezone ? ' selected' : '');
             $option .= '>'.$row.'</option>';
