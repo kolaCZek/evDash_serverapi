@@ -149,6 +149,10 @@ class Api {
         $abrp_json->car_model = "kia:soul:19:64:other";
         $abrp_json->capacity = 64;
         break;
+      case 13:
+        $abrp_json->car_model = "hyundai:ioniq5:22:74";
+        $abrp_json->capacity = 72;
+        break;  
       default:
         return false;
     }
