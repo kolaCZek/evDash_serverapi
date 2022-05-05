@@ -34,7 +34,7 @@ curl -X GET -H "Content-Type: application/json" http://api.example.com/\?registe
 
 ### Last record
 ```bash
-curl -d '{"apikey":"abcdef123456"}' -H "Content-Type: application/json" -X GET https://api.example.com
+curl -d '{"apikey":"abcdef123456"}' -H "Content-Type: application/json" -X GET http://api.example.com/?getVals
 ```
 #### Response
 ```json
@@ -60,7 +60,7 @@ curl -d '{"apikey":"abcdef123456"}' -H "Content-Type: application/json" -X GET h
 
 ### Records by date
 ```bash
-curl -d '{"apikey":"abcdef123456", "timestampFrom":"2020-12-05 00:20:00", "timestampTo":"2020-12-05 00:27:00"}' -H "Content-Type: application/json" -X GET https://api.example.com
+curl -d '{"apikey":"abcdef123456", "timestampFrom":"2020-12-05 00:20:00", "timestampTo":"2020-12-05 00:27:00"}' -H "Content-Type: application/json" -X GET http://api.example.com?getChargingInMonth
 ```
 #### Response
 ```json
