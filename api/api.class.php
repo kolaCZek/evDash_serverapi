@@ -149,10 +149,67 @@ class Api {
         $abrp_json->car_model = "kia:soul:19:64:other";
         $abrp_json->capacity = 64;
         break;
+
+      case 9:
+        $abrp_json->car_model = "volkswagen:id3:20:45:sr";
+        $abrp_json->capacity = 45;
+        break;
+      case 10:
+        $abrp_json->car_model = "volkswagen:id3:20:58:mr";
+        $abrp_json->capacity = 58;
+        break;
+      case 11:
+        $abrp_json->car_model = "volkswagen:id3:20:77:lr";
+        $abrp_json->capacity = 77;
+        break;
+      case 12:
+        $abrp_json->car_model = "hyundai:ioniq5:22:58";
+        $abrp_json->capacity = 58;
+        break;
       case 13:
         $abrp_json->car_model = "hyundai:ioniq5:22:74";
         $abrp_json->capacity = 72;
-        break;  
+        break;
+      case 14:
+        $abrp_json->car_model = "hyundai:ioniq5:22:77";
+        $abrp_json->capacity = 77;
+        break;
+      case 15:
+        $abrp_json->car_model = "peugeot:e208:20:50";
+        $abrp_json->capacity = 50;
+        break;
+      case 16:
+        $abrp_json->car_model = "kia:ev6:22:58";
+        $abrp_json->capacity = 58;
+        break;
+      case 17:
+        $abrp_json->car_model = "kia:ev6:22:77";
+        $abrp_json->capacity = 77;
+        break;
+      case 18:
+        $abrp_json->car_model = "skoda:enyaq:21:52:meb";
+        $abrp_json->capacity = 55;
+        break;
+      case 19:
+        $abrp_json->car_model = "skoda:enyaq:21:58:meb";
+        $abrp_json->capacity = 62;
+        break;
+      case 20:
+        $abrp_json->car_model = "skoda:enyaq:21:77:meb";
+        $abrp_json->capacity = 82;
+        break;
+      case 23:
+        $abrp_json->car_model = "volkswagen:id4:21:77";
+        $abrp_json->capacity = 77;
+        break;
+      case 24:
+        $abrp_json->car_model = "audi:q4:21:52:meb";
+        $abrp_json->capacity = 35;
+        break;
+      case 25:
+        $abrp_json->car_model = "audi:q4:21:77:meb";
+        $abrp_json->capacity = 40;
+        break;
       default:
         return false;
     }
