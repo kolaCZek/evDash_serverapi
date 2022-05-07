@@ -14,7 +14,29 @@
 		2 => 'Hyundai Ioniq 2018 28kWh',
 		3 => 'Kia eNiro 2020 39kWh',
 		4 => 'Hyundai Kona 2020 39kWh',
-		5 => 'Renault Zoe 22kWh'
+		5 => 'Renault Zoe 22kWh',
+		6 => 'Kia Niro PHEV 8.9kWh',
+		7 => 'BMW I3 (2014) 22kWh',
+		8 => 'Kia Soul (2020) 64kWh',
+		9 => 'VW ID3 (2021) 45kWh',
+		10 => 'VW ID3 (2021) 58kWh',
+		11 => 'VW ID3 (2021) 77kWh',
+		12 => 'Hyundai IONIQ5 58kWh',
+		13 => 'Hyundai IONIQ5 72kWh',
+		14 => 'Hyundai IONIQ5 77kWh',
+		15 => 'Peugot e208 50kWh',
+		16 => 'Kia EV6 58kWh',
+		17 => 'Kia EV6 77kWh',
+		18 => 'SKODA ENYAQ 55kWh',
+		19 => 'SKODA ENYAQ 62kWh',
+		20 => 'SKODA ENYAQ 82kWh',
+		21 => 'VW ID4 (2021) 45kWh',
+		22 => 'VW ID4 (2021) 58kWh',
+		23 => 'VW ID4 (2021) 77kWh',
+		24 => 'AUDI Q4 35kWh',
+		25 => 'AUDI Q4 40kWh',
+		26 => 'AUDI Q4 45kWh',
+		27 => 'AUDI Q4 50kWh'
 	);
 
 	$sumkWh = 0;
