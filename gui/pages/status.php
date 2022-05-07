@@ -16,7 +16,7 @@
 		4 => 'Hyundai Kona 2020 39kWh',
 		5 => 'Renault Zoe 22kWh',
 		6 => 'Kia Niro PHEV 8.9kWh',
-		7 => 'BMW I3 (2014)',
+		7 => 'BMW I3 (2014) 22kWh',
 		8 => 'Kia Soul (2020) 64kWh',
 		9 => 'VW ID3 (2021) 45kWh',
 		10 => 'VW ID3 (2021) 58kWh',
